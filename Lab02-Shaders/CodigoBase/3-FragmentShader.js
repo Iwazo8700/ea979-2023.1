@@ -82,6 +82,7 @@ function initGUI() {
 // ******************************************************************** //
 function mudaRaio() {
 
+	// Muda o raio
 	var obj = scene.getObjectByName("imagem")
 	obj.material.uniforms.uRaio.value = controls.Raio;
 	obj.material.uniformsNeedUpdate = true;

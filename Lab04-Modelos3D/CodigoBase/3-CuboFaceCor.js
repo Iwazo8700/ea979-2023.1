@@ -29,6 +29,12 @@ function main() {
 	
 	camera = new THREE.OrthographicCamera( -1.0, 1.0, 1.0, -1.0, -1.0, 1.0 );
 	scene.add( camera );
+	const ambientLight = new THREE.AmbientLight( 0xffffff );
+	scene.add( ambientLight );
+
+	const pointLight = new THREE.PointLight(0xffffff  );
+	camera.add( pointLight );
+	scene.add( camera );
 
 	buildScene();
 
@@ -42,11 +48,20 @@ function main() {
 
 function animate(time) {
 
-	var cube = scene.getObjectByName("cubo");
+	// var cube = scene.getObjectByName("cubo");
 
-	cube.rotation.x = time * 0.00001;
-	cube.rotation.y = time * 0.0001;
-	cube.rotation.z = time * 0.0005;
+	// cube.rotation.x = time * 0.00001;
+	// cube.rotation.y = time * 0.0001;
+	// cube.rotation.z = time * 0.0005;
+
+
+	var sphere = scene.getObjectByName("sphere");
+
+	sphere.rotation.x = time * 0.001;
+	sphere.rotation.y = time * 0.0001;
+	sphere.rotation.z = time * 0.0005;
+
+	
 
 	renderer.clear();
 	renderer.render(scene, camera);
@@ -60,66 +75,83 @@ function animate(time) {
 
 function buildScene() {
 
-	const axis = new THREE.AxesHelper();
-	scene.add(axis);
+	// const axis = new THREE.AxesHelper();
+	// scene.add(axis);
 
-	const positions 	= [];
-	const indices		= [];
-	const materialIndex = [];
+	// const positions 	= [];
+	// const indices		= [];
+	// const materialIndex = [];
 	
-	positions.push( 0.5,  0.5,  0.5); 	// V0
-	positions.push(-0.5, -0.5,  0.5); 	// V1 
-	positions.push( 0.5, -0.5,  0.5); 	// V2 
-	positions.push(-0.5,  0.5,  0.5); 	// V3 
-	positions.push( 0.5,  0.5, -0.5); 	// V4 
-	positions.push(-0.5, -0.5, -0.5); 	// V5 
-	positions.push( 0.5, -0.5, -0.5); 	// V6 
-	positions.push(-0.5,  0.5, -0.5); 	// V7 
+	// positions.push( 0.5,  0.5,  0.5); 	// V0
+	// positions.push(-0.5, -0.5,  0.5); 	// V1 
+	// positions.push( 0.5, -0.5,  0.5); 	// V2 
+	// positions.push(-0.5,  0.5,  0.5); 	// V3 
+	// positions.push( 0.5,  0.5, -0.5); 	// V4 
+	// positions.push(-0.5, -0.5, -0.5); 	// V5 
+	// positions.push( 0.5, -0.5, -0.5); 	// V6 
+	// positions.push(-0.5,  0.5, -0.5); 	// V7 
 
-	// Front
-	indices.push(1, 2, 0); 
-	indices.push(1, 0, 3); 
-	// Back
-	indices.push(5, 4, 6); 
-	indices.push(5, 7, 4); 
-	// Top
-	indices.push(3, 0, 4); 
-	indices.push(3, 4, 7); 
-	// Bottom
-	indices.push(1, 6, 2); 
-	indices.push(1, 5, 6); 
-	// Right
-	indices.push(2, 6, 4); 
-	indices.push(2, 4, 0); 
-	// Left
-	indices.push(5, 1, 3); 
-	indices.push(5, 3, 7);
+	// // Front
+	// indices.push(1, 2, 0); 
+	// indices.push(1, 0, 3); 
+	// // Back
+	// indices.push(5, 4, 6); 
+	// indices.push(5, 7, 4); 
+	// // Top
+	// indices.push(3, 0, 4); 
+	// indices.push(3, 4, 7); 
+	// // Bottom
+	// indices.push(1, 6, 2); 
+	// indices.push(1, 5, 6); 
+	// // Right
+	// indices.push(2, 6, 4); 
+	// indices.push(2, 4, 0); 
+	// // Left
+	// indices.push(5, 1, 3); 
+	// indices.push(5, 3, 7);
 	
-	var boxMaterials = 	[ 	new THREE.MeshBasicMaterial({color:0x0000FF}), 	// Front Face
-							new THREE.MeshBasicMaterial({color:0xFF00FF}), 	// Back Face
-							new THREE.MeshBasicMaterial({color:0x00FF00}), 	// Top Face
-							new THREE.MeshBasicMaterial({color:0x00FFFF}), 	// Bottom Face
-							new THREE.MeshBasicMaterial({color:0xFF0000}),	// Right Face 
-							new THREE.MeshBasicMaterial({color:0xFFFF00}) 	// Left Face
-						]; 
+	// var boxMaterials = 	[ 	new THREE.MeshBasicMaterial({color:0x0000FF}), 	// Front Face
+	// 						new THREE.MeshBasicMaterial({color:0xFF00FF}), 	// Back Face
+	// 						new THREE.MeshBasicMaterial({color:0x00FF00}), 	// Top Face
+	// 						new THREE.MeshBasicMaterial({color:0x00FFFF}), 	// Bottom Face
+	// 						new THREE.MeshBasicMaterial({color:0xFF0000}),	// Right Face 
+	// 						new THREE.MeshBasicMaterial({color:0xFFFF00}) 	// Left Face
+	// 					]; 
                  
-	var cubeGeom = new THREE.BufferGeometry(); 
+	// var cubeGeom = new THREE.BufferGeometry(); 
 
-	cubeGeom.setIndex( indices );
-	cubeGeom.setAttribute( 'position', new THREE.Float32BufferAttribute( positions, 3 ) );
+	// cubeGeom.setIndex( indices );
+	// cubeGeom.setAttribute( 'position', new THREE.Float32BufferAttribute( positions, 3 ) );
 
-	cubeGeom.clearGroups();
-	cubeGeom.addGroup (  0, 6, 0);	// Front
-	cubeGeom.addGroup (  6, 6, 1);	// Back
-	cubeGeom.addGroup ( 12, 6, 2);	// Top
-	cubeGeom.addGroup ( 18, 6, 3);	// Bottom
-	cubeGeom.addGroup ( 24, 6, 4);	// Right
-	cubeGeom.addGroup ( 30, 6, 5);	// Left
+	// cubeGeom.clearGroups();
+	// cubeGeom.addGroup (  0, 6, 0);	// Front
+	// cubeGeom.addGroup (  6, 6, 1);	// Back
+	// cubeGeom.addGroup ( 12, 6, 2);	// Top
+	// cubeGeom.addGroup ( 18, 6, 3);	// Bottom
+	// cubeGeom.addGroup ( 24, 6, 4);	// Right
+	// cubeGeom.addGroup ( 30, 6, 5);	// Left
 
-	const cubeMesh 	= new THREE.Mesh(cubeGeom, boxMaterials); 
-	cubeMesh.name 	= "cubo";
+	// const cubeMesh 	= new THREE.Mesh(cubeGeom, boxMaterials); 
+	// cubeMesh.name 	= "cubo";
 
-	scene.add( cubeMesh );
+	// scene.add( cubeMesh );
+
+
+	const map = new THREE.TextureLoader().load( 'textures/brain.jpg' );
+	map.wrapS = map.wrapT = THREE.RepeatWrapping;
+	map.anisotropy = 16;
+	map.colorSpace = THREE.SRGBColorSpace;
+
+	const material = new THREE.MeshPhongMaterial( { map: map, side: THREE.DoubleSide } );
+
+
+	let mesh = new THREE.Mesh(
+		new THREE.SphereGeometry( 1, 16, 16 ),
+		material
+		// new THREE.MeshBasicMaterial( { color: 0xfff000, wireframe: true } )
+	);
+	mesh.name 	= "sphere";
+	scene.add( mesh );
 }
 
 /// ***************************************************************

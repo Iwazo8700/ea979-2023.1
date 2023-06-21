@@ -26,9 +26,9 @@ function main() {
 	scene 	= new THREE.Scene();
 
 	initGUI();
-
+	
 	camera = new THREE.OrthographicCamera( -10.0, 10.0, 10.0, -10.0, -1.0, 1.0 );
-
+	// camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1.0, 10000 );
     var axis = new THREE.AxesHelper(1.0);
     axis.name = "eixos";
     scene.add(axis);

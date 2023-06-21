@@ -33,7 +33,20 @@ function main() {
 	camera.position.y = 2.0;
 	camera.position.z = 13.0;
 	camera.updateProjectionMatrix();
+	
+	const cubeGeometry = new THREE.BoxGeometry();
+	const cubeMaterial = new THREE.MeshPhongMaterial({ color:
+	  0xFF0000 });
+	const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+	cube.position.x = -1;
+	cube.castShadow = true;
+	scene.add(cube);
 
+	scene.add(new THREE.AmbientLight(0x666666))
+	const dirLight = new THREE.DirectionalLight(0xaaaaaa)
+	dirLight.position.set(5, 12, 8)
+	dirLight.castShadow = true
+	// camera.updateProjectionMatrix();
 	geraTerreno();
 
 	requestAnimationFrame(anime);

@@ -33,6 +33,7 @@ function main() {
 	scene 	= new THREE.Scene();
 
 	camera = new THREE.PerspectiveCamera( 70.0, rendSize.x / rendSize.y, 0.01, 1000.0 );
+	// define a posicao da camera
 	camera.position.y = 2.0;
 	camera.position.z = 13.0;
 	camera.updateProjectionMatrix();
@@ -56,6 +57,7 @@ function geraTerreno() {
 											},
 						vertexShader 	: document.getElementById('minVertShader').textContent,
 						fragmentShader 	: document.getElementById('minFragShader').textContent,
+						//nao preenche o plano, mantendo ele triangulado
 						wireframe  		: true,
 						side 			: THREE.DoubleSide
 					} );
@@ -64,10 +66,17 @@ function geraTerreno() {
     const terreno	= new THREE.Mesh 	(	new THREE.PlaneGeometry( 100, 100, 30, 30 ), 
     										shaderMat
 										); 
+	
+	// Angulo do terreno. ele começa paralelo a camera
 	terreno.rotateX(-90.0 * Math.PI / 180.0);
     terreno.name 	= "terreno";
+	terreno.castShadow = true;
 	scene.add( terreno );
-
+	scene.add(new THREE.AmbientLight(0x666666))
+	const dirLight = new THREE.DirectionalLight(0xaaaaaa)
+	dirLight.position.set(5, 12, 8)
+	dirLight.castShadow = true
+	// camera.updateProjectionMatri
 	var axis = new THREE.AxesHelper(8.0);
     axis.name = "eixos";
 	axis.position.y = 0.2;
@@ -111,6 +120,7 @@ function anime(time) {
 // **                                                                ** //
 // ******************************************************************** //
 function mudaUniform() {
+	// Muda a amplitude
 
 	var obj = scene.getObjectByName("terreno")
 	obj.material.uniforms.uAmp.value = controls.Amplitude;
